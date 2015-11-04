@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     player.cpp \
     map.cpp \
-    bloc.cpp
+    bloc.cpp \
+    game.cpp
 
 HEADERS  += mainwindow.h \
     player.h \
     map.h \
-    bloc.h
+    bloc.h \
+    game.h
 
 FORMS    += mainwindow.ui
