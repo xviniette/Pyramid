@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include "bloc.h"
+#include <QString>
 
 class Map
 {
