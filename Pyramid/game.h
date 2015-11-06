@@ -12,14 +12,16 @@ class Game
 {
 public:
     Game();
-    static Game *getIntance();
+    static Game *getInstance();
     void update();
+    bool start();
+
     static Game *instance;
 
-    bool start();
-private:
     Player *player;
     Map *map;
+private:
+
     QTimer *timer;
     int fps = 30;
 

@@ -30,4 +30,4 @@ HEADERS  += \
     gamewindow.h \
     openglwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    +=

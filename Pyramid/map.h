@@ -13,7 +13,7 @@ public:
 private:
     QString nom;
     float startX, startY, startZ;
-    QVector<Bloc> blocs;
+    QVector<Bloc> *blocs;
     QMap<QString,int> temps;
 };
 

@@ -33,36 +33,11 @@ void GameWindow::initialize()
     glLoadIdentity();
     glOrtho(-1.0, 1.0, -1.0, 1.0, -100.0, 100.0);
 
+    qDebug()<<"pd";
+
 
     loadMap(":/heightmap-2.png");
 
-}
-
-void GameWindow::loadMap(QString localPath)
-{
-
-    if (QFile::exists(localPath)) {
-        m_image = QImage(localPath);
-    }
-
-
-    uint id = 0;
-    p = new point[m_image.width() * m_image.height()];
-    QRgb pixel;
-    for(int i = 0; i < m_image.width(); i++)
-    {
-        for(int j = 0; j < m_image.height(); j++)
-        {
-
-            pixel = m_image.pixel(i,j);
-
-            id = i*m_image.width() +j;
-
-            p[id].x = (float)i/(m_image.width()) - ((float)m_image.width()/2.0)/m_image.width();
-            p[id].y = (float)j/(m_image.height()) - ((float)m_image.height()/2.0)/m_image.height();
-            p[id].z = 0.001f * (float)(qRed(pixel));
-        }
-    }
 }
 
 void GameWindow::render()
@@ -72,7 +47,7 @@ void GameWindow::render()
 
 
     glLoadIdentity();
-   glScalef(ss,ss,ss);
+    glScalef(ss,ss,ss);
     glRotatef(rotX,1.0f,0.0f,0.0f);
     glRotatef(rotY,0.0f,0.0f,1.0f);
 

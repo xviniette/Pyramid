@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -m64 -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -m64 -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I../Pyramid -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I. -I.
+INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I../Pyramid -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I.
 LINK          = g++
 LFLAGS        = -m64
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5Widgets -L/usr/lib/x86_64-linux-gnu -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -153,7 +153,7 @@ first: all
 
 all: Makefile $(TARGET)
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET):  $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 	{ test -n "$(DESTDIR)" && DESTDIR="$(DESTDIR)" || DESTDIR=.; } && test $$(gdb --version | sed -e 's,[^0-9][^0-9]*\([0-9]\)\.\([0-9]\).*,\1\2,;q') -gt 72 && gdb --nx --batch --quiet -ex 'set confirm off' -ex "save gdb-index $$DESTDIR" -ex quit '$(TARGET)' && test -f $(TARGET).gdb-index && objcopy --add-section '.gdb_index=$(TARGET).gdb-index' --set-section-flags '.gdb_index=readonly' '$(TARGET)' '$(TARGET)' && rm -f $(TARGET).gdb-index || true
 
@@ -293,7 +293,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/Pyramid1.0.0 || mkdir -p .tmp/Pyramid1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/Pyramid1.0.0/ && $(COPY_FILE) --parents ../Pyramid/player.h ../Pyramid/map.h ../Pyramid/bloc.h ../Pyramid/game.h ../Pyramid/inputs.h ../Pyramid/gamewindow.h ../Pyramid/openglwindow.h .tmp/Pyramid1.0.0/ && $(COPY_FILE) --parents ../Pyramid/main.cpp ../Pyramid/player.cpp ../Pyramid/map.cpp ../Pyramid/bloc.cpp ../Pyramid/game.cpp ../Pyramid/inputs.cpp ../Pyramid/gamewindow.cpp ../Pyramid/openglwindow.cpp .tmp/Pyramid1.0.0/ && $(COPY_FILE) --parents ../Pyramid/mainwindow.ui .tmp/Pyramid1.0.0/ && (cd `dirname .tmp/Pyramid1.0.0` && $(TAR) Pyramid1.0.0.tar Pyramid1.0.0 && $(COMPRESS) Pyramid1.0.0.tar) && $(MOVE) `dirname .tmp/Pyramid1.0.0`/Pyramid1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/Pyramid1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/Pyramid1.0.0/ && $(COPY_FILE) --parents ../Pyramid/player.h ../Pyramid/map.h ../Pyramid/bloc.h ../Pyramid/game.h ../Pyramid/inputs.h ../Pyramid/gamewindow.h ../Pyramid/openglwindow.h .tmp/Pyramid1.0.0/ && $(COPY_FILE) --parents ../Pyramid/main.cpp ../Pyramid/player.cpp ../Pyramid/map.cpp ../Pyramid/bloc.cpp ../Pyramid/game.cpp ../Pyramid/inputs.cpp ../Pyramid/gamewindow.cpp ../Pyramid/openglwindow.cpp .tmp/Pyramid1.0.0/ && (cd `dirname .tmp/Pyramid1.0.0` && $(TAR) Pyramid1.0.0.tar Pyramid1.0.0 && $(COMPRESS) Pyramid1.0.0.tar) && $(MOVE) `dirname .tmp/Pyramid1.0.0`/Pyramid1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/Pyramid1.0.0
 
 
 clean:compiler_clean 
@@ -428,19 +428,15 @@ moc_openglwindow.cpp: /usr/include/qt5/QtGui/QWindow \
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all:
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
-ui_mainwindow.h: ../Pyramid/mainwindow.ui
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Pyramid/mainwindow.ui -o ui_mainwindow.h
-
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_moc_header_clean 
 
 ####### Compile
 

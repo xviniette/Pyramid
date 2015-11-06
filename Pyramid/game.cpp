@@ -8,7 +8,7 @@ Game::Game()
 
 }
 
-Game* Game::getIntance()
+Game* Game::getInstance()
 {
     return instance;
 }

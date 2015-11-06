@@ -33,6 +33,7 @@ int main(int argc, char **argv)
     window.resize(800, 480);
     window.show();
 
+
     window.setAnimating(true);
 
     return app.exec();

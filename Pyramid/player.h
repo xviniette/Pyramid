@@ -13,8 +13,17 @@ public:
     void setPosition(float x, float y, float z);
     void update();
     bool hasCollision(Bloc b);
+    QMap *getDeltaToMove(Bloc b);
 
-    float x, y, z, dirX, dirY, width, height, depth, gravity, jump, speed, velX, velY, velZ;
+    float x, y, z, velX, velY, velZ, dirX, dirY = 0;
+    float width = 20;
+    float height = 40;
+    float depth = 20;
+    float  gravity = 1.5;
+    float  maxGravity = 10;
+    float jump = 5;
+    float speed = 15;
+
     QString pseudo;
     QMap<QString, bool> inputs;
 };
