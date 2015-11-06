@@ -4,7 +4,7 @@ Bloc::Bloc()
 {
 }
 
-Bloc::Bloc(float x, float y, float z, float, Bloc::width, float height, float depth)
+Bloc::Bloc(float x, float y, float z, float width, float height, float depth)
 {
     this->x = x;
     this->y = y;

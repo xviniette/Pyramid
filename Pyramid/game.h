@@ -20,11 +20,9 @@ public:
 
     Player *player;
     Map *map;
-private:
+    int fps;
 
-    QTimer *timer;
-    int fps = 30;
-
+    QMap<QString, int> keys;
 };
 
 #endif // GAME_H

@@ -17,16 +17,11 @@ public:
     GameWindow();
 
     void initialize();
+    void update();
     void render();
     bool event(QEvent *event);
 
     void keyPressEvent(QKeyEvent *event);
-
-    void displayTriangles();
-    void displayLines();
-    void displayTrianglesC();
-    void displayPoints();
-    void displayTrianglesTexture();
 
     void displayColor(float);
 
@@ -36,13 +31,9 @@ private:
     QImage m_image;
     point *p;
 
-
-    int carte=1;
-
-    int etat = 0;
-    float rotX = -45.0;
-    float rotY = -45.0;
-    float ss = 1.0f;
+    float rotX;
+    float rotY;
+    float ss;
 
 };
 

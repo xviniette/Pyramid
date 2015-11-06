@@ -9,11 +9,13 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <time.h>
-#include <sys/time.h>
 #include <iostream>
 
 #include <QtCore>
 #include <QtGui>
+
+#include "game.h"
+
 using namespace std;
 
 
