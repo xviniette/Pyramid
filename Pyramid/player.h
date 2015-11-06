@@ -13,7 +13,7 @@ public:
     void setPosition(float x, float y, float z);
     void update();
     bool hasCollision(Bloc b);
-    QMap *getDeltaToMove(Bloc b);
+    QMap<QString, float> *getDeltaToMove(Bloc b);
 
     float x, y, z, velX, velY, velZ, dirX, dirY = 0;
     float width = 20;

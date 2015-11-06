@@ -17,9 +17,33 @@ void Player::setPosition(float x, float y, float z)
 
 void Player::update()
 {
-    float radian = this->dirX * M_PI/180;
-    this->velX = qCos(radian) * this->speed;
-    this->velZ = qSin(radian) * this->speed;
+
+    float degGlobal = 0;
+    int nbappuye = 0;
+    if(this->inputs.contains("u") && this->inputs["u"] == true){
+        degGlobal += 0;
+        nbappuye++;
+    }
+    if(this->inputs.contains("l") && this->inputs["l"] == true){
+        degGlobal -= 90;
+        nbappuye++;
+    }
+    if(this->inputs.contains("r") && this->inputs["r"] == true){
+        degGlobal += 90;
+        nbappuye++;
+    }
+    if(this->inputs.contains("d") && this->inputs["d"] == true){
+        degGlobal -= 180;
+        nbappuye++;
+    }
+
+    if(nbappuye > 0){
+        degGlobal = degGlobal / nbappuye;
+        float radian = (this->dirX + degGlobal) * M_PI/180;
+        this->velX = qCos(radian) * this->speed;
+        this->velZ = qSin(radian) * this->speed;
+    }
+
 
     this->velY += this->gravity;
     if(this->velY > this->maxGravity){
@@ -49,7 +73,7 @@ bool Player::hasCollision(Bloc b)
             && this->z + this->depth >= b.z;
 }
 
-QMap *Player::getDeltaToMove(Bloc b)
+QMap<QString, float> *Player::getDeltaToMove(Bloc b)
 {
 
 }

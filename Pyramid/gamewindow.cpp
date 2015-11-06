@@ -33,11 +33,6 @@ void GameWindow::initialize()
     glLoadIdentity();
     glOrtho(-1.0, 1.0, -1.0, 1.0, -100.0, 100.0);
 
-    qDebug()<<"pd";
-
-
-    loadMap(":/heightmap-2.png");
-
 }
 
 void GameWindow::render()
@@ -129,8 +124,6 @@ void GameWindow::keyPressEvent(QKeyEvent *event)
         QString depth (":/heightmap-");
         depth += QString::number(carte) ;
         depth += ".png" ;
-
-        loadMap(depth);
         break;
     }
     renderNow();

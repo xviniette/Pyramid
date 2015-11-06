@@ -30,8 +30,6 @@ public:
 
     void displayColor(float);
 
-    void loadMap(QString localPath);
-
 private:
 
     int m_frame;

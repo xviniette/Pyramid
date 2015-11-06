@@ -10,11 +10,13 @@ class Map
 {
 public:
     Map();
-private:
+
     QString nom;
     float startX, startY, startZ;
     QVector<Bloc> *blocs;
     QMap<QString,int> temps;
+private:
+
 };
 
 #endif // MAP_H
