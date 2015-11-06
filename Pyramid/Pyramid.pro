@@ -13,18 +13,21 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     player.cpp \
     map.cpp \
     bloc.cpp \
     game.cpp \
-    inputs.cpp
+    inputs.cpp \
+    gamewindow.cpp \
+    openglwindow.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     player.h \
     map.h \
     bloc.h \
     game.h \
-    inputs.h
+    inputs.h \
+    gamewindow.h \
+    openglwindow.h
 
 FORMS    += mainwindow.ui

@@ -4,6 +4,7 @@
 #include <QVector>
 #include "bloc.h"
 #include <QString>
+#include <QMap>
 
 class Map
 {
@@ -13,7 +14,7 @@ private:
     QString nom;
     float startX, startY, startZ;
     QVector<Bloc> blocs;
-    QVector<int> temps;
+    QMap<QString,int> temps;
 };
 
 #endif // MAP_H
