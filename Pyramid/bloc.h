@@ -6,7 +6,6 @@ class Bloc
 public:
     Bloc();
 
-protected:
     float x, y, z, width, height, depth;
 };
 
