@@ -10,6 +10,7 @@ class Map
 {
 public:
     Map();
+    void generate();
 
     QString nom;
     float startX, startY, startZ;

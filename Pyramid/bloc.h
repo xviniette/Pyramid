@@ -5,6 +5,7 @@ class Bloc
 {
 public:
     Bloc();
+    Bloc(float x, float y, float z, float, width, float height, float depth);
 
     float x, y, z, width, height, depth;
 };

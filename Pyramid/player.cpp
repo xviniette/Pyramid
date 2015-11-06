@@ -24,7 +24,7 @@ void Player::update()
         degGlobal += 0;
         nbappuye++;
     }
-    if(this->inputs.contains("l") && this->inputs["l"] == true){
+    /*if(this->inputs.contains("l") && this->inputs["l"] == true){
         degGlobal -= 90;
         nbappuye++;
     }
@@ -35,7 +35,7 @@ void Player::update()
     if(this->inputs.contains("d") && this->inputs["d"] == true){
         degGlobal -= 180;
         nbappuye++;
-    }
+    }*/
 
     if(nbappuye > 0){
         degGlobal = degGlobal / nbappuye;

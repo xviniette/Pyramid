@@ -17,6 +17,8 @@ bool Game::start(){
   //  this->timer = new QTimer(this);
  /*   this->timer->connect(timer, SIGNAL(timeout()),this, SLOT(renderNow()));
     this->timer->start(1000/this->fps);*/
+    this->map = new Game();
+    this->player = new Player();
 }
 
 
