@@ -13,6 +13,8 @@ Game::Game()
     this->keys["r"] = 68;
     this->keys["j"] = 32;
     this->keys["c"] = 16777249;
+
+    this->start();
 }
 
 Game* Game::getInstance()
@@ -31,5 +33,5 @@ bool Game::start(){
 void Game::update()
 {
     //qDebug()<<"lol";
-   //this->player->update();
+   this->player->update();
 }

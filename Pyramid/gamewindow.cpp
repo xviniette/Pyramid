@@ -82,6 +82,15 @@ void GameWindow::keyPressEvent(QKeyEvent *event)
     }
 }
 
+void GameWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    Game *g = Game::getInstance();
+    QString key = g->keys.key(event->key());
+    if(key != ""){
+        g->player->inputs[key] = false;
+    }
+}
+
 
 
 

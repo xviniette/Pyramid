@@ -14,12 +14,12 @@ Player::Player()
     this->width = 20;
     this->depth = 20;
     this->height = 40;
-    this->gravity = 1.5;
+    this->gravity = 0.5;
     this->jump = 5;
-    this->maxGravity = 10;
+    this->maxGravity = 2;
     this->speed = 10;
     this->velX = this->velY = this->velZ = 0;
-    this->dirX = 0;
+    this->dirX = 45;
     this->dirY = 0;
 }
 
@@ -32,14 +32,16 @@ void Player::setPosition(float x, float y, float z)
 
 void Player::update()
 {
-
-    /*float degGlobal = 0;
+    float degGlobal = 0;
     int nbappuye = 0;
+    this->velX = 0;
+    this->velZ = 0;
+
     if(this->inputs.contains("u") && this->inputs["u"] == true){
         degGlobal += 0;
         nbappuye++;
-    }*/
-    /*if(this->inputs.contains("l") && this->inputs["l"] == true){
+    }
+    if(this->inputs.contains("l") && this->inputs["l"] == true){
         degGlobal -= 90;
         nbappuye++;
     }
@@ -50,32 +52,32 @@ void Player::update()
     if(this->inputs.contains("d") && this->inputs["d"] == true){
         degGlobal -= 180;
         nbappuye++;
-    }*/
+    }
 
-   /* if(nbappuye > 0){
+    if(nbappuye > 0){
         degGlobal = degGlobal / nbappuye;
         float radian = (this->dirX + degGlobal) * M_PI/180;
         this->velX = qCos(radian) * this->speed;
         this->velZ = qSin(radian) * this->speed;
-    }*/
+    }
 
-/*
+
     this->velY += this->gravity;
     if(this->velY > this->maxGravity){
         this->velY = this->maxGravity;
-    }*/
-/*
+    }
+
     Game *g = Game::getInstance();
     QVector<Bloc> *blocs = g->map->blocs;
     for(int i = 0; i < blocs->size(); i++){
        if(this->hasCollision(blocs->at(i))){
-
+            qDebug("COllision");
        }
-    }*/
+    }
 
-  /*  this->x += this->velX;
+    this->x += this->velX;
     this->y += this->velY;
-    this->z += this->velZ;*/
+    this->z += this->velZ;
 
     qDebug()<<this->x << "/" << this->y << "/" << this->z;
 }
