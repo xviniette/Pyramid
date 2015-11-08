@@ -91,8 +91,10 @@ bool Player::hasCollision(Bloc b)
             && this->z <= b.z + b.depth
             && this->z + this->depth >= b.z;
 }
-/*<QString, float>
+
 QMap<QString, float> *Player::getDeltaToMove(Bloc b)
 {
+    QMap<QString, float> data;
+
     return new QMap();
-}*/
+}
