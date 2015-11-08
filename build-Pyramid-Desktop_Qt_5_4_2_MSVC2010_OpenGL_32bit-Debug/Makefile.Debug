@@ -16,7 +16,7 @@ CFLAGS        = -nologo -Zm200 -Zc:wchar_t -Zi -MDd -W3 /Fddebug\Pyramid.pdb $(D
 CXXFLAGS      = -nologo -Zm200 -Zc:wchar_t -Zi -MDd -GR -W3 -w34100 -w34189 -EHsc /Fddebug\Pyramid.pdb $(DEFINES)
 INCPATH       = -I"..\Pyramid" -I"." -I"C:\Qt\5.4\msvc2010_opengl\include" -I"C:\Qt\5.4\msvc2010_opengl\include\QtWidgets" -I"C:\Qt\5.4\msvc2010_opengl\include\QtGui" -I"C:\Qt\5.4\msvc2010_opengl\include\QtCore" -I"debug" -I"C:\Qt\5.4\msvc2010_opengl\mkspecs\win32-msvc2010" 
 LINKER        = link
-LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /DEBUG /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
+LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /DEBUG /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
 LIBS          = glu32.lib opengl32.lib gdi32.lib user32.lib /LIBPATH:C:\Qt\5.4\msvc2010_opengl\lib C:\Qt\5.4\msvc2010_opengl\lib\qtmaind.lib shell32.lib C:\Qt\5.4\msvc2010_opengl\lib\Qt5Widgetsd.lib C:\Qt\5.4\msvc2010_opengl\lib\Qt5Guid.lib C:\Qt\5.4\msvc2010_opengl\lib\Qt5Cored.lib 
 QMAKE         = C:\Qt\5.4\msvc2010_opengl\bin\qmake.exe
 IDC           = idc
@@ -48,7 +48,6 @@ SOURCES       = ..\Pyramid\main.cpp \
 		..\Pyramid\map.cpp \
 		..\Pyramid\bloc.cpp \
 		..\Pyramid\game.cpp \
-		..\Pyramid\inputs.cpp \
 		..\Pyramid\gamewindow.cpp \
 		..\Pyramid\openglwindow.cpp debug\moc_openglwindow.cpp
 OBJECTS       = debug\main.obj \
@@ -56,7 +55,6 @@ OBJECTS       = debug\main.obj \
 		debug\map.obj \
 		debug\bloc.obj \
 		debug\game.obj \
-		debug\inputs.obj \
 		debug\gamewindow.obj \
 		debug\openglwindow.obj \
 		debug\moc_openglwindow.obj
@@ -65,14 +63,12 @@ DIST          =  ..\Pyramid\player.h \
 		..\Pyramid\map.h \
 		..\Pyramid\bloc.h \
 		..\Pyramid\game.h \
-		..\Pyramid\inputs.h \
 		..\Pyramid\gamewindow.h \
 		..\Pyramid\openglwindow.h ..\Pyramid\main.cpp \
 		..\Pyramid\player.cpp \
 		..\Pyramid\map.cpp \
 		..\Pyramid\bloc.cpp \
 		..\Pyramid\game.cpp \
-		..\Pyramid\inputs.cpp \
 		..\Pyramid\gamewindow.cpp \
 		..\Pyramid\openglwindow.cpp
 QMAKE_TARGET  = Pyramid
@@ -150,21 +146,10 @@ first: all
 all: Makefile.Debug $(DESTDIR_TARGET)
 
 $(DESTDIR_TARGET):  $(OBJECTS) 
-	echo 1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "debug\\Pyramid.exe.embed.manifest">debug\Pyramid.exe_manifest.rc
-	if not exist $(DESTDIR_TARGET) if exist debug\Pyramid.exe.embed.manifest del debug\Pyramid.exe.embed.manifest
-	if exist debug\Pyramid.exe.embed.manifest copy /Y debug\Pyramid.exe.embed.manifest debug\Pyramid.exe_manifest.bak
 	$(LINKER) $(LFLAGS) /MANIFEST /MANIFESTFILE:debug\Pyramid.exe.embed.manifest /OUT:$(DESTDIR_TARGET) @<<
-$(OBJECTS) $(LIBS) 
-!IF EXIST(debug\Pyramid.exe_manifest.res)
-debug\Pyramid.exe_manifest.res
-!ENDIF
+$(OBJECTS) $(LIBS)
 <<
-	if exist debug\Pyramid.exe_manifest.bak fc /b debug\Pyramid.exe.embed.manifest debug\Pyramid.exe_manifest.bak >NUL || del debug\Pyramid.exe_manifest.bak
-	if not exist debug\Pyramid.exe_manifest.bak rc.exe /fodebug\Pyramid.exe_manifest.res debug\Pyramid.exe_manifest.rc
-	if not exist debug\Pyramid.exe_manifest.bak $(LINKER) $(LFLAGS) /MANIFEST /MANIFESTFILE:debug\Pyramid.exe.embed.manifest /OUT:$(DESTDIR_TARGET) @<<
-$(OBJECTS) $(LIBS) debug\Pyramid.exe_manifest.res
-<<
-	if exist debug\Pyramid.exe_manifest.bak del debug\Pyramid.exe_manifest.bak
+	mt.exe /nologo /manifest debug\Pyramid.exe.embed.manifest /outputresource:$(DESTDIR_TARGET);1
 
 qmake: FORCE
 	@$(QMAKE) -spec win32-msvc2010 CONFIG+=debug -o Makefile.Debug ..\Pyramid\Pyramid.pro
@@ -175,8 +160,8 @@ dist:
 	$(ZIP) Pyramid.zip $(SOURCES) $(DIST) ..\Pyramid\Pyramid.pro C:\Qt\5.4\msvc2010_opengl\mkspecs\features\spec_pre.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\common\shell-win32.conf C:\Qt\5.4\msvc2010_opengl\mkspecs\qconfig.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_clucene_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_core.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_declarative.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_declarative_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_enginio.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_enginio_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_help.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_location.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_location_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_network.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_platformsupport_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_script.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_script_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_scripttools.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_scripttools_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_webkit.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_webkit_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_webkitwidgets.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_webkitwidgets_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_webview.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_webview_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.4\msvc2010_opengl\mkspecs\features\qt_functions.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\qt_config.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\win32\qt_config.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\win32-msvc2010\qmake.conf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\spec_post.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\exclusive_builds.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\default_pre.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\win32\default_pre.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\resolve_config.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\default_post.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\build_pass.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\win32\rtti.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\precompile_header.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\warn_on.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\qt.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\resources.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\moc.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\win32\opengl.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\uic.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\win32\windows.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\testcase_targets.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\exceptions.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\yacc.prf C:\Qt\5.4\msvc2010_opengl\mkspecs\features\lex.prf ..\Pyramid\Pyramid.pro C:/Qt/5.4/msvc2010_opengl/lib/qtmaind.prl C:/Qt/5.4/msvc2010_opengl/lib/Qt5Cored.prl C:/Qt/5.4/msvc2010_opengl/lib/Qt5Widgetsd.prl C:/Qt/5.4/msvc2010_opengl/lib/Qt5Guid.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\main.obj debug\player.obj debug\map.obj debug\bloc.obj debug\game.obj debug\inputs.obj debug\gamewindow.obj debug\openglwindow.obj debug\moc_openglwindow.obj
-	-$(DEL_FILE) debug\Pyramid.exp debug\Pyramid.ilk debug\Pyramid.idb debug\Pyramid.exe.embed.manifest debug\Pyramid.exe_manifest.rc debug\Pyramid.exe_manifest.res
+	-$(DEL_FILE) debug\main.obj debug\player.obj debug\map.obj debug\bloc.obj debug\game.obj debug\gamewindow.obj debug\openglwindow.obj debug\moc_openglwindow.obj
+	-$(DEL_FILE) debug\Pyramid.exp debug\Pyramid.ilk debug\Pyramid.idb debug\Pyramid.exe.embed.manifest
 
 distclean: clean 
 	-$(DEL_FILE) debug\Pyramid.pdb
@@ -632,7 +617,15 @@ debug\main.obj: ..\Pyramid\main.cpp ..\Pyramid\gamewindow.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qtexttable.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qdesktopservices.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qvalidator.h \
-		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qtguiversion.h
+		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qtguiversion.h \
+		..\Pyramid\game.h \
+		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QTimer \
+		..\Pyramid\player.h \
+		..\Pyramid\bloc.h \
+		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QMap \
+		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QString \
+		..\Pyramid\map.h \
+		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QVector
 
 debug\player.obj: ..\Pyramid\player.cpp ..\Pyramid\player.h \
 		..\Pyramid\bloc.h \
@@ -705,6 +698,7 @@ debug\player.obj: ..\Pyramid\player.cpp ..\Pyramid\player.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtCore\qcontiguouscache.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QString \
 		C:\Qt\5.4\msvc2010_opengl\include\QtCore\qmath.h \
+		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QDebug \
 		..\Pyramid\game.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QTimer \
 		C:\Qt\5.4\msvc2010_opengl\include\QtCore\qtimer.h \
@@ -863,8 +857,6 @@ debug\game.obj: ..\Pyramid\game.cpp ..\Pyramid\game.h \
 		..\Pyramid\map.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QVector \
 		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QDebug
-
-debug\inputs.obj: ..\Pyramid\inputs.cpp ..\Pyramid\inputs.h
 
 debug\gamewindow.obj: ..\Pyramid\gamewindow.cpp ..\Pyramid\gamewindow.h \
 		..\Pyramid\openglwindow.h \
@@ -1178,7 +1170,15 @@ debug\gamewindow.obj: ..\Pyramid\gamewindow.cpp ..\Pyramid\gamewindow.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qtexttable.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qdesktopservices.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qvalidator.h \
-		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qtguiversion.h
+		C:\Qt\5.4\msvc2010_opengl\include\QtGui\qtguiversion.h \
+		..\Pyramid\game.h \
+		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QTimer \
+		..\Pyramid\player.h \
+		..\Pyramid\bloc.h \
+		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QMap \
+		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QString \
+		..\Pyramid\map.h \
+		C:\Qt\5.4\msvc2010_opengl\include\QtCore\QVector
 
 debug\openglwindow.obj: ..\Pyramid\openglwindow.cpp ..\Pyramid\openglwindow.h \
 		C:\Qt\5.4\msvc2010_opengl\include\QtGui\QWindow \

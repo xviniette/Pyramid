@@ -67,12 +67,32 @@ void Player::update()
         this->velY = this->maxGravity;
     }
 
+    QMap<QString, float> deltasBloc;
     Game *g = Game::getInstance();
     QVector<Bloc> *blocs = g->map->blocs;
+    float minValue = 0;
+    QString minCoord = NULL;
     for(int i = 0; i < blocs->size(); i++){
-       if(this->hasCollision(blocs->at(i))){
-            qDebug("COllision");
-       }
+        //Pour chaque bloc
+        if(this->hasCollision(blocs->at(i))){
+            //Si collision -> on cherche la coordonnee a bouger
+            deltasBloc = this->getDeltaInBloc(blocs->at(i));
+
+            QMap<QString, float>::iterator l;
+            for (l = deltasBloc.begin(); l != deltasBloc.end(); ++l){
+                if(minCoord.isNull() || minValue < l.value()){
+                    minCoord = l.key();
+                    minValue = l.value();
+                }
+            }
+            if(minCoord == "x"){
+                this->x += minValue;
+            }else if(minCoord == "y"){
+                this->y += minValue;
+            }else if(minCoord == "z"){
+                this->z += minValue;
+            }
+        }
     }
 
     this->x += this->velX;
@@ -92,9 +112,27 @@ bool Player::hasCollision(Bloc b)
             && this->z + this->depth >= b.z;
 }
 
-QMap<QString, float> *Player::getDeltaToMove(Bloc b)
+QMap<QString, float> Player::getDeltaInBloc(Bloc b)
 {
-    QMap<QString, float> *data;
+    QMap<QString, float> data;
+    //x
+    if(this->x <= b.x){
+        data.insert("x", -(this->x + this->width - b.x));
+    }else{
+        data.insert("x", (b.x + b.width - this->x));
+    }
+    //y
+    if(this->y <= b.y){
+        data.insert("y", -(this->y + this->height - b.y));
+    }else{
+        data.insert("y", (b.y + b.height - this->y));
+    }
+    //z
+    if(this->z <= b.z){
+        data.insert("z", -(this->z + this->depth - b.z));
+    }else{
+        data.insert("z", (b.z + b.depth - this->z));
+    }
 
     return data;
 }
