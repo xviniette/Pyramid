@@ -16,7 +16,7 @@ Player::Player()
     this->height = 40;
     this->gravity = 0.5;
     this->jump = 5;
-    this->maxGravity = 2;
+    this->maxGravity = 0.5;
     this->speed = 10;
     this->velX = this->velY = this->velZ = 0;
     this->dirX = 45;
@@ -94,7 +94,7 @@ bool Player::hasCollision(Bloc b)
 
 QMap<QString, float> *Player::getDeltaToMove(Bloc b)
 {
-    QMap<QString, float> data;
+    QMap<QString, float> *data;
 
-    return new QMap();
+    return data;
 }
