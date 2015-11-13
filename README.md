@@ -1,4 +1,7 @@
 # Pyramid 
+
+![Alt text](https://raw.githubusercontent.com/xviniette/Pyramid/master/splash.png)
+
 Pyramid est un jeu de plateforme où l'on doit réaliser un parcours le plus rapidement possible.
 
 [Une vidéo](https://www.youtube.com/watch?v=XQ-hyYrXqfk "Vidéo youtube") d'un mod du jeu Counter-Strike dont on s'inspire.
