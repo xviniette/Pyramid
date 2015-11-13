@@ -133,6 +133,6 @@ QMap<QString, float> Player::getDeltaInBloc(Bloc b)
     }else{
         data.insert("z", (b.z + b.depth - this->z));
     }
-
+    //qDebug()<<data;
     return data;
 }

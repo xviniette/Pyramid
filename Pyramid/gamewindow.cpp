@@ -57,6 +57,8 @@ void GameWindow::render()
     glRotatef(rotX,1.0f,0.0f,0.0f);
     glRotatef(rotY,0.0f,0.0f,1.0f);
 
+
+
     ++m_frame;
 }
 
