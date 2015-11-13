@@ -22,7 +22,7 @@ GameWindow::GameWindow()
 {
     this->rotX = -45.0;
     this->rotY = -45.0;
-    this->ss = 1.0f;
+    this->ss = 0.5f;
 }
 
 void GameWindow::initialize()
@@ -56,11 +56,77 @@ void GameWindow::render()
     glScalef(ss,ss,ss);
     glRotatef(rotX,1.0f,0.0f,0.0f);
     glRotatef(rotY,0.0f,0.0f,1.0f);
+    this->rotX += 1;
+    this->rotY += 1;
 
-
+    this->display();
 
     ++m_frame;
 }
+
+void GameWindow::display()
+{
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glBegin(GL_QUADS);
+    uint id = 0;
+
+    Game *g = Game::getInstance();
+    QVector<Bloc> *blocs = g->map->blocs;
+
+    for(int i = 0; i < blocs->size(); i++){
+        this->drawCube(blocs->at(i).x, blocs->at(i).y, blocs->at(i).z, blocs->at(i).width, blocs->at(i).height, blocs->at(i).depth);
+    }
+
+    glEnd();
+}
+
+void GameWindow::drawCube(float x, float y, float z, float w, float h, float d)
+{
+    glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    //dessus
+    glVertex3f(x,y,z);
+    glVertex3f(x+w,y,z);
+    glVertex3f(x+w,y,z+d);
+    glVertex3f(x,y,z+d);
+
+    glColor3f(1.0f, 0.5f, 0.0f);
+    //dessous
+    glVertex3f(x,y+h,z);
+    glVertex3f(x+w,y+h,z);
+    glVertex3f(x+w,y+h,z+d);
+    glVertex3f(x,y+h,z+d);
+
+    glColor3f(1.0f, 0.0f, 0.0f);
+    //devant
+    glVertex3f(x,y,z+d);
+    glVertex3f(x+w,y,z+d);
+    glVertex3f(x+w,y+h,z+d);
+    glVertex3f(x,y+h,z+d);
+
+    glColor3f(1.0f, 1.0f, 0.0f);
+    //derriere
+    glVertex3f(x,y,z);
+    glVertex3f(x+w,y,z);
+    glVertex3f(x+w,y+h,z);
+    glVertex3f(x,y+h,z);
+
+    glColor3f(0.0f, 0.0f, 1.0f);
+    //gauche
+    glVertex3f(x,y,z);
+    glVertex3f(x,y,z+d);
+    glVertex3f(x,y+h,z+d);
+    glVertex3f(x,y+h,z);
+
+    glColor3f(1.0f, 0.0f, 1.0f);
+    //droite
+    glVertex3f(x+w,y,z);
+    glVertex3f(x+w,y,z+d);
+    glVertex3f(x+w,y+h,z+d);
+    glVertex3f(x+w,y+h,z);
+}
+
+
+
 
 bool GameWindow::event(QEvent *event)
 {
@@ -92,8 +158,6 @@ void GameWindow::keyReleaseEvent(QKeyEvent *event)
         g->player->inputs[key] = false;
     }
 }
-
-
 
 
 void GameWindow::displayColor(float alt)

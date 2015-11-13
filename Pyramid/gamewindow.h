@@ -2,6 +2,7 @@
 #define GAMEWINDOW_H
 
 #include "openglwindow.h"
+#include "bloc.h"
 
 
 struct point
@@ -19,6 +20,8 @@ public:
     void initialize();
     void update();
     void render();
+    void display();
+    void drawCube(float x, float y, float z, float w, float h, float d);
     bool event(QEvent *event);
 
     void keyPressEvent(QKeyEvent *event);

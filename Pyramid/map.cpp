@@ -14,5 +14,5 @@ void Map::generate()
 
     this->nom = QString("THE MAP");
     this->blocs = new QVector<Bloc>;
-    this->blocs->append(*new Bloc(0, 80, 0, 1000, 1000, 1000));
+    this->blocs->append(*new Bloc(0, 0, 0, 0.5, 1, 1));
 }
