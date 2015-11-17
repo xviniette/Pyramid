@@ -80,7 +80,7 @@ void Player::update()
 
             QMap<QString, float>::iterator l;
             for (l = deltasBloc.begin(); l != deltasBloc.end(); ++l){
-                if(minCoord.isNull() || minValue < l.value()){
+                if(minCoord.isNull() || minValue > l.value()){
                     minCoord = l.key();
                     minValue = l.value();
                 }
