@@ -1,5 +1,7 @@
 # Pyramid 
 
+[Lien en ligne](http://bazia.net:1326 "Lien du jeu")
+
 ![Alt text](https://raw.githubusercontent.com/xviniette/Pyramid/master/splash.png)
 
 Pyramid est un jeu de plateforme où l'on doit réaliser un parcours le plus rapidement possible.
