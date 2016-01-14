@@ -1,5 +1,5 @@
 # Pyramid 
-# [Jouez sur votre navigateur](http://bazia.net:1326 "http://bazia.net:1326")
+# [Jouez sur votre navigateur](http://www.bazia.net:1326/ "http://www.bazia.net:1326/")
 
 Pyramid est un de plateforme 3D multijoueur en ligne.
 L'objectif est de réaliser des parcours le plus rapidement possible. 
