@@ -4,6 +4,8 @@
 Pyramid est un de plateforme 3D multijoueur en ligne.
 L'objectif est de réaliser des parcours le plus rapidement possible. 
 
+Réalisé en HTML5/Javascript/WebGL (from scratch)
+
 ![Alt text](https://raw.githubusercontent.com/xviniette/Pyramid/master/splash.png)
 
 Pyramid est un jeu de plateforme où l'on doit réaliser un parcours le plus rapidement possible.
