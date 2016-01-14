@@ -6,7 +6,8 @@ L'objectif est de réaliser des parcours le plus rapidement possible.
 
 Réalisé en HTML5/Javascript/WebGL (from scratch)
 
-![Alt text](https://raw.githubusercontent.com/xviniette/Pyramid/master/splash.png)
+![c bo](.//splash2.jpg)
+![Alt text](./splash.png)
 
 Pyramid est un jeu de plateforme où l'on doit réaliser un parcours le plus rapidement possible.
 
