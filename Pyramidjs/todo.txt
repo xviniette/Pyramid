@@ -1,0 +1,14 @@
+rotation joueur
+
+//FAIT
+rotation map serveur
+page affichage levels
+BUG FLOU -> gérer resize canvas bien
+une skybox
+bug focus tchat
+optimisation (suppression ombre => ok)
++ interpolation
+MODEL PERSONNAGE 
+
+
+

@@ -3,27 +3,172 @@
 <head>
 	<meta charset='UTF-8' />
 	<title>Pyramid</title>
-	<link rel="stylesheet" href="public/style.css" />
-	<link rel="icon" href="public/favicon.ico" />
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="favicon.ico" rel="icon" type="image/x-icon" />
 </head>
 <body style="zoom:1;">
 
-	<canvas id="game"></canvas>
+	<canvas id="game" width="2000" height="1500"></canvas>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
-	<script src="public/js/socketio.js"></script>
-	<script src="public/js/jquery.js"></script>
+	<div id="editor">
+		<div id="blocs"></div>
+	</div>
 
-	<script src="public/js/main.js"></script>
-	<script src="public/js/config.js"></script>
-	<script src="public/js/common.js"></script>
-	<script src="public/js/socketioevent.js"></script>
+	<div id="menu">
+		<ul>
+			<a href="#" action="home"><li><i class="fa fa-home"></i></li></a>
+			<a href="#" action="config"><li><i class="fa fa-cog"></i></li></a>
+		</ul>
+	</div>
 
-	<script src="public/js/Player.js"></script>
-	<script src="public/js/Display.js"></script>
-	<script src="public/js/Client.js"></script>
-	<script src="public/js/Game.js"></script>
-	<script src="public/js/Map.js"></script>
-	<script src="public/js/Bloc.js"></script>
+	<div id="home">
+		<h1>Pyramid</h1>
+		<ul>
+			<a href="#" action="tuto"><li>Tutoriel</li></a>
+			<a href="#" action="solo"><li>Aventure</li></a>
+			<a href="#" action="multi"><li>Multijoueur <span id="nbOnline"></span></li></a>
+		</ul>
+	</div>	
+
+	<div id="solo">
+		<h1>Les niveaux</h1>
+		<ul id="maps">
+
+		</ul>
+	</div>
+
+	<div id="configs">
+		<button id="closeConfigs">Fermer</button>
+		<h1>Touches</h1>
+		<ul>
+			<li>Z/↑ pour avancer</li>
+			<li>S/↓ pour reculer</li>
+			<li>Q/← pour aller gauche</li>
+			<li>D/→ pour aller droite</li>
+			<li>ESPACE/CLIC DROIT pour sauter</li>
+		</ul>
+		<h1>Sensibilité souris</h1>
+		<input id="sensibility" type="range" value="5" max="10" min="1" step="1">
+		<p>Développé par Vincent Bazia et Thibaut Castanié</p>
+	</div>
+
+	<div id="timeleft"></div>
+	<ul id="times"></ul>
+	<div id="record"></div>
+
+	<div id="timer"></div>
+	<div id="infobulle"></div>
+	<div id="endRace"></div>
+
+	<div id="tchat">
+		<div id="headerMessage">
+			<ul id="messages"></ul>
+		</div>
+		<form id="tchatsend">
+			<input type="text" placeholder="Entrée pour écrire" id="message" autocomplete="off">
+		</form>
+	</div>
+
+	<ul id="players"></ul>
+
+
+	<script src="js/socketio.js"></script>
+	<script src="js/jquery.js"></script>
+
+	<script src="js/main.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/socketioevent.js"></script>
+
+	<script src="js/Player.js"></script>
+	<script src="js/Display.js"></script>
+	<script src="js/Client.js"></script>
+	<script src="js/Game.js"></script>
+	<script src="js/Map.js"></script>
+	<script src="js/Bloc.js"></script>
+
+	<script src="js/Camera.js"></script>
+	<script src="js/Element.js"></script>
+	<script src="js/gl-matrix.js"></script>
+	<script src="js/webgl.js"></script>
+
+<script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec2 vTextureCoord;
+
+    uniform sampler2D uSampler;
+
+    void main(void) {
+        gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    }
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+    attribute vec2 aTextureCoord;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+
+    varying vec2 vTextureCoord;
+
+
+    void main(void) {
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        vTextureCoord = aTextureCoord;
+    }
+</script>
+
+
+<!--	
+		<script id="shader-fs" type="x-shader/x-fragment">
+	precision mediump float;
+
+	varying vec2 vTextureCoord;
+	varying vec3 vLightWeighting;
+
+	uniform sampler2D uSampler;
+
+	void main(void) {
+		vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+		gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+	}
+	</script>
+
+	<script id="shader-vs" type="x-shader/x-vertex">
+	attribute vec3 aVertexPosition;
+	attribute vec3 aVertexNormal;
+	attribute vec2 aTextureCoord;
+
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+	uniform mat3 uNMatrix;
+
+	uniform vec3 uAmbientColor;
+
+	uniform vec3 uLightingDirection;
+	uniform vec3 uDirectionalColor;
+
+	uniform bool uUseLighting;
+
+	varying vec2 vTextureCoord;
+	varying vec3 vLightWeighting;
+
+	void main(void) {
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+		vTextureCoord = aTextureCoord;
+
+		if (!uUseLighting) {
+			vLightWeighting = vec3(1.0, 1.0, 1.0);
+		} else {
+			vec3 transformedNormal = uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+		}
+	}
+	</script>
+</script>-->
 </body>
 </html>

@@ -14,7 +14,7 @@ Utils.onLogin = function(data, socket){
 		}
 	}else{
 		valid = false;
-		socket.emit("loginProblem", "Seulement alphanumérique");
+		socket.emit("loginProblem", "Entre 2 et 20 caractères alphanumériques");
 	}
 
 	if(valid){
@@ -31,6 +31,22 @@ Utils.onPosition = function(data, socket){
     p.y = data.y;
     p.z = data.z;
     p.dirX = data.dirX;
+}
+
+Utils.onTchat = function(data, socket){
+	var p = game.getPlayerBySocket(socket.id);
+	if(!p){return;}
+	for(var i in game.players){
+		Utils.messageTo(game.players[i].socket, "tchat", {pseudo:p.pseudo, message:data});
+	}
+}
+
+Utils.onTime = function(data, socket){
+	var p = game.getPlayerBySocket(socket.id);
+	if(!p){return;}
+	for(var i in game.players){
+		Utils.messageTo(game.players[i].socket, "information", {pseudo:p.pseudo, temps:data.temps, record:data.record});
+	}
 }
 
 Utils.onDisconnect = function(socket){

@@ -1,9 +1,288 @@
 body{
 	margin: 0px;
 	padding: 0px;
+	background-color: #161616;
+	font-family: Arial;
+	font-size: 16px;
 }
 
-canvas{
+ul{
+	list-style: none;
 	margin: 0px;
 	padding: 0px;
+}
+
+li{
+	list-style: none;
+	padding: 0px;
+}
+
+a{
+	text-decoration: none;
+}
+
+/*EDITOR*/
+
+#editor{
+	position: absolute;
+	margin: auto;
+	top:100px;
+	right:0;
+	width:300px;
+	height:600px;
+	padding:5px;
+	text-align:center;
+	z-index: 1000;
+	background-color: white;
+	display: none;
+	overflow: auto;
+}
+
+/* solo */
+
+#solo{
+	position: absolute;
+	margin: auto;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	width:800px;
+	height:650px;
+	padding:5px;
+	text-align:center;
+	z-index: 400;
+	color:white;
+	display:none;
+}
+
+#solo h1{
+	color: #FF9700;
+	font-size: 60px;
+}
+
+#solo li{
+	display: inline-block;
+	background-color: #0059FF;
+	text-align: center;
+	border-radius: 10px;
+	width: 300px;
+	margin: 20px;
+	cursor: pointer;
+}
+
+#solo li:hover{
+	background-color: #4787FF;
+}
+
+/*ACCUEIL*/
+#home{
+	position: absolute;
+	margin: auto;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	width:400px;
+	height:650px;
+	padding:5px;
+	text-align:center;
+	z-index: 500;
+}
+
+
+
+#home h1{
+	color: #FF9700;
+	font-size: 60px;
+}
+
+#home li{
+	background-color: #0059FF;
+	padding: 20px;
+	margin: 50px 0px;
+	border: 5px solid black;
+}
+
+#home li:hover{
+	background-color: #4787FF;
+}
+
+
+
+#home a{
+	color:black;
+	font-weight: bold;
+	font-size: 40px;
+}
+
+/*MENU*/
+
+#menu{
+	position: absolute;
+	margin: auto;
+	top:0;
+	right:0;
+	text-align:center;
+	color:white;
+	z-index: 1000;
+}
+
+#menu li{
+	background-color: #FF9700;
+	color:black;
+	display: inline-block;
+	width: 30px;
+	border: 2px solid black;
+}
+
+#menu a{
+	font-size: 30px;
+}
+
+
+
+#game{
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index: 100;
+}
+
+/*TCHAT*/
+#tchat{
+	position: absolute;
+	bottom:0px;
+	left:0px;
+	z-index: 200;
+	display: none;
+}
+
+#tchat #message{
+	border: 0px;
+	background-color: rgba(0, 0, 0, 0.5);
+	color:white;
+	font-size: 16px;
+	width: 300px
+}
+
+#messages .information{
+	color:#FFC200;
+}
+
+#tchat #messages{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	color:white;
+}
+
+#headerMessage {
+	position: relative;
+	overflow: hidden;
+	height: 150px;
+	width: 300px;
+	background-color: rgba(0, 0, 0, 0.5);
+	margin-bottom: 5px;
+}
+
+/*PLAYERS*/
+
+#players{
+	position: absolute;
+	bottom:0px;
+	right:0px;
+	z-index: 200;
+	color: white;
+	text-align:right;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+/*TIMES*/
+#times{
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index: 200;
+	color: white;
+}
+
+/*RECORD*/
+#record{
+	position:absolute;
+	top:40px;
+	right:0px;
+	z-index: 200;
+	font-size: 20px;
+	color: white;
+}
+
+/*INFOBULLE*/
+#infobulle{
+	position: absolute;
+	margin: auto;
+	top:100px;
+	right:0;
+	left:0;
+	font-size: 20px;
+	color: white;
+	text-align:center;
+	z-index: 300;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+#endRace{
+	position: absolute;
+	margin: auto;
+	top:150px;
+	right:0;
+	left:0;
+	font-size: 30px;
+	color: red;
+	text-align:center;
+	z-index: 300;
+}
+
+/* TEMPS EN COURS*/
+#timer{
+	position: absolute;
+	margin: auto;
+	bottom:0;
+	right:0;
+	left:0;
+	font-size: 40px;
+	color: red;
+	text-align:center;
+	z-index: 300;
+	font-weight: bold;
+}
+
+/* TEMPS RESTANT */
+#timeleft{
+	position: absolute;
+	margin: auto;
+	top:0;
+	right:0;
+	left:0;
+	font-size:15px;
+	color:white;
+	text-align:center;
+	z-index: 300;
+}
+
+#configs{
+	position: absolute;
+	margin: auto;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	width:400px;
+	height:400px;
+	padding:5px;
+	text-align:center;
+	background-color: white;
+	color: black;
+	z-index: 500;
+	display: none;
 }

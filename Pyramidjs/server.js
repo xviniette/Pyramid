@@ -15,6 +15,10 @@ eval(fs.readFileSync('./public/js/Bloc.js')+'');
 eval(fs.readFileSync('./public/js/serverUtils.js')+'');
 eval(fs.readFileSync('./public/js/UniqueNumber.js')+'');
 
+var maps = [];
+
+var maps = JSON.parse(fs.readFileSync('public/maps.json','utf8'));
+
 server.listen(PORT);
 
 app.get('/',function(req, res){
@@ -23,11 +27,12 @@ app.get('/',function(req, res){
 
 app.get( '/*' , function( req, res, next ) {
 	var file = req.params[0];
-	res.sendFile( __dirname + '/' + file );
+	res.sendFile( __dirname + '/public/' + file );
 });
 
 var isServer = true;
 var game = new Game();
+game.start();
 var unUser = new UniqueNumber(1);
 //physic game
 
@@ -50,6 +55,13 @@ io.on('connection', function(socket){
 
 	socket.on("tchat", function(data){
 		Utils.onTchat(data, socket);
+	});
+
+	socket.on("time", function(data){
+		Utils.onTime(data, socket);
+	});	
+	socket.on("deconnexion", function(){
+		Utils.onDisconnect(socket);
 	});
 
 	socket.on("disconnect", function(){
