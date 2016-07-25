@@ -1,17 +1,16 @@
-# Pyramid 
-# [Jouez sur votre navigateur](http://www.bazia.net:1326/ "http://www.bazia.net:1326/")
+# Pyramid ([Play](http://www.bazia.net:1326/))
 
-- [Présentation orale](./presentation_pyramid.pdf "Le pdf de la présentation orale")
+Pyramid is an university project ([presentation slides (french)](http://github.com/xviniette/Pyramid/blob/master/presentation_pyramid.pdf)). It's a real-time multiplayer 3D platform game written from scratch !
+The goal is to reach as quickly as possible the late levels.
 
-Pyramid est un de plateforme 3D multijoueur en ligne.
-L'objectif est de réaliser des parcours le plus rapidement possible. 
+Pyramid is inspired by a mod of Counter-Strike game ([Video](https://www.youtube.com/watch?v=XQ-hyYrXqfk))
 
-Réalisé en HTML5/Javascript/WebGL (from scratch)
+![alt tag](https://github.com/xviniette/Pyramid/raw/master/splash2.jpg)
 
-![c bo](.//splash2.jpg)
-
-[Une vidéo](https://www.youtube.com/watch?v=XQ-hyYrXqfk "Vidéo youtube") d'un mod du jeu Counter-Strike dont on s'inspire.
-
-![Alt text](./splash.png)
-
+## Tech
+* Javascript
+* WebGL (no lib!)
+* Node.js
+* Websocket (socket.io)
+* HTML5/CSS3
 
